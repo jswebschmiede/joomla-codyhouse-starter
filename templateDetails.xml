@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="template" client="site">
+
+	<name>[you_tpl_name]</name>
+	<creationDate>2022</creationDate>
+	<author>[your-name]</author>
+	<copyright>Copyright © your-site</copyright>
+	<authorEmail>info@your-site.de</authorEmail>
+	<authorUrl>http://your-site.de</authorUrl>
+	<description><![CDATA[
+		<h1>[you_tpl_name]</h1>
+<p>Created by <a href="http://your-site.de" target="_blank">your-site.de | http://your-site.de</a>.</p>
+<p><img src="../templates/joomla-codyhouse-starter/template_preview.png" /></p>
+	]]>	</description>
+
+	<files>
+		<folder>assets</folder>
+		<folder>template-parts</folder>
+		<folder>html</folder>
+		<filename>component.php</filename>
+		<filename>error.php</filename>
+		<filename>favicon.ico</filename>
+		<filename>index.php</filename>
+		<filename>logic.php</filename>
+		<filename>offline.php</filename>
+		<filename>template_preview.png</filename>
+		<filename>template_thumbnail.png</filename>
+		<filename>templateDetails.xml</filename>
+	</files>
+
+	<positions>
+		<position>header</position>
+		<position>main-menu</position>
+		<position>breadcrumb</position>
+		<position>content-1</position>
+		<position>content-2</position>
+		<position>content-3</position>
+		<position>content-4</position>
+		<position>content-5</position>
+		<position>content-6</position>
+		<position>footer</position>
+		<position>debug</position>
+	</positions>
+
+	<languages>
+		<language tag="de-DE">de-DE/tpl_joomla-codyhouse-starter.ini</language>
+	</languages>
+
+	<config>
+		<fields name="params">
+			<fieldset name="advanced">
+				<field name="brand" type="radio" label="TPL_JCS_BRAND_LABEL" default="1" layout="joomla.form.field.radio.switcher" filter="boolean">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field name="logoFile" type="media" default="" label="TPL_JCS_LOGO_LABEL" showon="brand:1" />
+
+				<field name="siteTitle" type="text" default="" label="TPL_JCS_TITLE" filter="string" showon="brand:1" />
+
+				<field name="siteDescription" type="text" default="" label="TPL_JCS_TAGLINE_LABEL" description="TPL_CASSIOPEIA_TAGLINE_DESC" filter="string" showon="brand:1" />
+
+				<field name="stickyHeader" type="radio" label="TPL_JCS_STICKY_LABEL" layout="joomla.form.field.radio.switcher" default="0" filter="integer">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field name="backTop" type="radio" label="TPL_JCS_BACKTOTOP_LABEL" layout="joomla.form.field.radio.switcher" default="0" filter="integer">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+
+</extension>
