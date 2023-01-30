@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var babel = require('gulp-babel');
 var sass = require('gulp-sass')(require('sass-embedded'));
 var sassGlob = require('gulp-sass-glob');
 var browserSync = require('browser-sync');
@@ -9,6 +10,7 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var connect = require('gulp-connect-php');
 var purgecss = require('gulp-purgecss');
+var sourcemaps = require('gulp-sourcemaps');
 
 // js file paths
 var utilJsPath = 'node_modules/codyhouse-framework/main/assets/js';
@@ -25,52 +27,64 @@ function reload(done) {
 }
 
 gulp.task('sass', function () {
-    return gulp.src(scssFilesPath)
+    return gulp
+        .src(scssFilesPath)
+        .pipe(sourcemaps.init())
         .pipe(sassGlob({ sassModules: true }))
         .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
         .pipe(postcss([autoprefixer()]))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(cssFolder))
-        .pipe(browserSync.reload({
-            stream: true,
-            notify: false
-        }));
+        .pipe(
+            browserSync.reload({
+                stream: true,
+                notify: false
+            })
+        );
 });
 
 gulp.task('scripts', function () {
-    return gulp.src([
-        utilJsPath + '/util.js',
-        componentsJsPath
-    ])
+    return gulp
+        .src([utilJsPath + '/util.js', componentsJsPath])
+        .pipe(babel())
         .pipe(concat('scripts.js'))
         .pipe(gulp.dest(scriptsJsPath))
         .pipe(rename('scripts.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(scriptsJsPath))
-        .pipe(browserSync.reload({
-            stream: true,
-            notify: false
-        }));
+        .pipe(
+            browserSync.reload({
+                stream: true,
+                notify: false
+            })
+        );
 });
 
-gulp.task('watch', gulp.series(['sass', 'scripts'], function () {
-    connect.server({}, function () {
-        browserSync({
-            proxy: 'http://your-site.de/',
-            notify: false
+gulp.task(
+    'watch',
+    gulp.series(['sass', 'scripts'], function () {
+        connect.server({}, function () {
+            browserSync({
+                proxy: 'http://localjoomla/',
+                notify: false
+            });
         });
-    });
-    gulp.watch(['**/*.php', 'layout/**/*.php'], gulp.series(reload));
-    gulp.watch('assets/css/**/*.scss', gulp.series(['sass']));
-    gulp.watch(componentsJsPath, gulp.series(['scripts']));
-}));
+        gulp.watch(['**/*.php', 'layout/**/*.php'], gulp.series(reload));
+        gulp.watch('assets/css/**/*.scss', gulp.series(['sass']));
+        gulp.watch(componentsJsPath, gulp.series(['scripts']));
+    })
+);
 
 /* Gulp purgeCSS task */
 gulp.task('purgeCSS', function () {
     gulp.src(cssFolder + '/style.css')
-        .pipe(purgecss({
-            content: ['**/*.php', scriptsJsPath + '/scripts.min.js'],
-            safelist: ['.is-hidden', '.is-visible'],
-            defaultExtractor: content => content.match(/[\w-/:%@]+(?<!:)/g) || []
-        }))
+        .pipe(
+            purgecss({
+                content: ['**/*.php', scriptsJsPath + '/scripts.min.js'],
+                safelist: ['.is-hidden', '.is-visible'],
+                defaultExtractor: (content) =>
+                    content.match(/[\w-/:%@]+(?<!:)/g) || []
+            })
+        )
         .pipe(gulp.dest(cssFolder));
 });

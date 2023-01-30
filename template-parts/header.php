@@ -12,6 +12,6 @@ defined('_JEXEC') or die;
 ?>
 
 
-<header id="masthead" class="main-header" role="banner">
+<header id="masthead" class="main-header">
 
 </header>
