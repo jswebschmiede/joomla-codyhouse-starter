@@ -1,0 +1,16 @@
+@use '../base' as *;
+
+/* -------------------------------- 
+
+File#: _1_preloader
+Title: Preloader
+
+-------------------------------- */
+
+.spinner-wrapper {
+    &.done {
+        pointer-events: none;
+        opacity: 0;
+        visibility: hidden;
+    }
+}

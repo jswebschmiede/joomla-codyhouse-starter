@@ -46,17 +46,17 @@ $this->setHtml5(true);
 
 // Logo file or site title param
 if ($templateparams['logoFile']) {
-	$logo = '<img src="' . Uri::root(true) . '/' . htmlspecialchars($templateparams['logoFile'], ENT_QUOTES) . '" alt="' . $sitename . '">';
+	$logo = '<img src="' . Uri::root(true) . '/' . HTMLHelper::_('cleanImageURL', $templateparams['logoFile'])->url . '" alt="' . $sitename . '">';
 } elseif ($templateparams['siteTitle']) {
 	$logo = '<span title="' . $sitename . '">' . htmlspecialchars($templateparams['siteTitle'], ENT_COMPAT, 'UTF-8') . '</span>';
 } else {
-	$logo = HTMLHelper::_('image', 'logo.svg', $sitename, ['class' => 'logo d-inline-block'], true, 0);
+	$logo = HTMLHelper::_('image', 'logo.svg', $sitename, ['class' => 'logo inline-block'], false, 0);
 }
 
 // Browsers support SVG favicons
-$this->addHeadLink(HTMLHelper::_('image', 'joomla-favicon.svg', '', [], true, 1), 'icon', 'rel', ['type' => 'image/svg+xml']);
-$this->addHeadLink(HTMLHelper::_('image', 'favicon.ico', '', [], true, 1), 'alternate icon', 'rel', ['type' => 'image/vnd.microsoft.icon']);
-$this->addHeadLink(HTMLHelper::_('image', 'joomla-favicon-pinned.svg', '', [], true, 1), 'mask-icon', 'rel', ['color' => '#000']);
+$this->addHeadLink($tpath . '/favicon-16x16.png', 'icon', 'rel', ['type' => 'image/png', 'sizes' => '16x16']);
+$this->addHeadLink($tpath . '/favicon.ico', 'alternate icon', 'rel', ['type' => 'image/vnd.microsoft.icon']);
+$this->addHeadLink($tpath . '/favicon-32x32.png', 'mask-icon', 'rel', ['color' => '#f91020']);
 
 // Set MetaData
 $this->setMetaData('X-UA-Compatible', 'IE=edge', true);

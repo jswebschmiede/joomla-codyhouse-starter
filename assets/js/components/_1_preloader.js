@@ -2,11 +2,15 @@
 
 (function () {
     setTimeout(function () {
-        var preloader = document.getElementById("loader");
+        var preloader = document.getElementById('loader');
 
         if (preloader) {
-            if (!preloader.classList.contains("done")) {
-                preloader.classList.add("done");
+            if (!preloader.classList.contains('done')) {
+                preloader.classList.add('done');
+
+                setTimeout(() => {
+                    preloader.remove();
+                }, 500);
             }
         }
     }, 500);
