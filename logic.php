@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 /** @var Joomla\CMS\Document\HtmlDocument $this */
 
@@ -54,13 +55,18 @@ if ($templateparams['logoFile']) {
 }
 
 // Browsers support SVG favicons
+$this->addHeadLink($tpath . '/apple-touch-icon.png', 'apple-touch-icon', 'rel', ['type' => 'image/png', 'sizes' => '32x32']);
+$this->addHeadLink($tpath . '/favicon-32x32.png', 'icon', 'rel', ['type' => 'image/png', 'sizes' => '32x32']);
 $this->addHeadLink($tpath . '/favicon-16x16.png', 'icon', 'rel', ['type' => 'image/png', 'sizes' => '16x16']);
 $this->addHeadLink($tpath . '/favicon.ico', 'alternate icon', 'rel', ['type' => 'image/vnd.microsoft.icon']);
-$this->addHeadLink($tpath . '/favicon-32x32.png', 'mask-icon', 'rel', ['color' => '#f91020']);
+$this->addHeadLink($tpath . '/site.webmanifest', 'manifest', 'rel', []);
+$this->addHeadLink($tpath . '/safari-pinned-tab.svg', 'mask-icon', 'rel', ['color' => '#5bbad5']);
 
 // Set MetaData
+$this->setMetaData('msapplication-TileColor', '#ffc40d', true);
+$this->setMetaData('theme-color', '#f1f1f1', true);
 $this->setMetaData('X-UA-Compatible', 'IE=edge', true);
-$this->setMetaData('viewport', 'width=device-width, initial-scale=1, shrink-to-fit=no');
+$this->setMetaData('viewport', 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1');
 $this->setMetaData('content-type', 'text/html', true);
 
 // css
